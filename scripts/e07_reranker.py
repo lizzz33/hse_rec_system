@@ -51,11 +51,11 @@ from catboost import CatBoostRanker, Pool
 from recsys.data import GENRE_COLUMNS, load_events, load_item_features
 from recsys.experiments import RESULTS_DIR, SPLITTERS
 from recsys.metrics import evaluate, save_submission
-from recsys.models import ALSRecommender, ItemKNNRecommender
+from recsys.models import ALSRecommender, EASERecommender, ItemKNNRecommender
 from recsys.split import chronological_split
 
 N_CANDIDATES = 50
-GEN_POOL = 300  # глубина пулов ALS/KNN для признаков
+GEN_POOL = 300  # глубина пулов ALS/KNN/EASE для признаков
 SEED = 42
 
 
@@ -66,7 +66,7 @@ def sasrec_candidates(train, valid, catalog_size, work_dir, epochs) -> pd.DataFr
 
 
 def build_features(candidates: pd.DataFrame, sasrec_full: pd.DataFrame, train: pd.DataFrame,
-                   item_features: pd.DataFrame) -> pd.DataFrame:
+                   item_features: pd.DataFrame, with_ease: bool = False) -> pd.DataFrame:
     """Признаки для каждой пары (user, item) из пула кандидатов SASRec."""
     full = sasrec_full.copy()
     full["sasrec_rank"] = full.groupby("user_id")["score"].rank(method="first")
@@ -77,11 +77,16 @@ def build_features(candidates: pd.DataFrame, sasrec_full: pd.DataFrame, train: p
         full[["user_id", "item_id", "sasrec_rank", "sasrec_score_norm"]], on=["user_id", "item_id"], how="left"
     )
 
-    # ALS и KNN: скоры/ранги из топ-GEN_POOL; вне пула — ранг GEN_POOL+1, скор 0
-    for name, model in (
+    # ALS, KNN и (опционально) EASE: скоры/ранги из топ-GEN_POOL;
+    # вне пула — ранг GEN_POOL+1, скор 0. EASE почти не пересекается с SASRec
+    # (0.9/10 в топ-10) — самый комплементарный из классических генераторов
+    generators = [
         ("als", ALSRecommender("rating", alpha=1.0)),
         ("knn", ItemKNNRecommender("binary")),
-    ):
+    ]
+    if with_ease:
+        generators.append(("ease", EASERecommender(l2=1500.0)))
+    for name, model in generators:
         pool = model.fit(train).recommend(k=GEN_POOL)
         features = features.merge(
             pool[["user_id", "item_id", "score", "rank"]].rename(
@@ -162,8 +167,12 @@ def main() -> None:
                         help="имя конфига из свипа e05c (для протокола журнала)")
     parser.add_argument("--epochs", type=int, default=None, help="эпохи SASRec (по умолчанию из имени конфига)")
     parser.add_argument("--submission", action="store_true", help="собрать сабмит на полных events")
+    parser.add_argument("--with-ease", action="store_true", help="добавить признаки EASE (lambda=1500)")
+    parser.add_argument("--pool", type=int, default=N_CANDIDATES, help="размер пула кандидатов SASRec")
     args = parser.parse_args()
 
+    global N_CANDIDATES
+    N_CANDIDATES = args.pool
     events = load_events()
     item_features = load_item_features()
     catalog_size = e05.item_catalog(events)
@@ -188,7 +197,7 @@ def main() -> None:
         inner_train, inner_valid, catalog_size, work / "inner", epochs
     )
     inner_features = add_labels(
-        build_features(inner_candidates, inner_full, inner_train, item_features), inner_valid
+        build_features(inner_candidates, inner_full, inner_train, item_features, args.with_ease), inner_valid
     )
     feature_cols = [c for c in inner_features.columns if c not in ("user_id", "item_id", "label")]
     print(f"признаков: {len(feature_cols)}; inner кандидатов: {len(inner_features):,}; "
@@ -198,7 +207,7 @@ def main() -> None:
     # --- уровень 2: честная оценка на внешнем valid ---
     print(f"[outer] SASRec на {len(train):,} событий...", flush=True)
     candidates, sasrec_full = sasrec_candidates(train, valid, catalog_size, work / "outer", epochs)
-    features = build_features(candidates, sasrec_full, train, item_features)
+    features = build_features(candidates, sasrec_full, train, item_features, args.with_ease)
     reranked = apply_ranker(ranker, features, feature_cols)
     panel = evaluate(reranked, valid, k=10, train_events=train)
     control = candidates.sort_values(["user_id", "rank"]).groupby("user_id", sort=False).head(10)
@@ -207,27 +216,27 @@ def main() -> None:
     print(f"[9010] catboost reranking (честно):        recall@10_macro_relevant={panel['recall@10_macro_relevant']:.4f}", flush=True)
 
     payload = {
-        "sasrec_config": args.sasrec_config,
+        "sasrec_config": f"{args.sasrec_config}{'_ease' if args.with_ease else ''}_pool{args.pool}",
         "protocol": "two-level: ranker on inner 90/10, evaluated on outer 9010",
         "results": {"9010": {
             "sasrec_only": {str(k): float(v) for k, v in control_panel.items()},
             "catboost_rerank": {str(k): float(v) for k, v in panel.items()},
         }},
     }
-    out = RESULTS_DIR / "e07_reranker.json"
+    out = RESULTS_DIR / f"e07_reranker{'_ease' if args.with_ease else ''}_pool{args.pool}.json"
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
     print(f"результаты: {out}")
 
     if args.submission:
         # --- финал: SASRec и признаки на полных events, ранкер на всех внешних метках ---
         print("\n=== сабмит на полных events ===", flush=True)
-        outer_features = add_labels(build_features(candidates, sasrec_full, train, item_features), valid)
+        outer_features = add_labels(build_features(candidates, sasrec_full, train, item_features, args.with_ease), valid)
         final_ranker = fit_ranker(outer_features, feature_cols)
         full_scores = e05.fit_predict_sasrec(events, None, catalog_size, work / "full", epochs=epochs)
         full_candidates = e05.filter_seen_topk(full_scores, events, k=N_CANDIDATES)
-        full_features = build_features(full_candidates, full_scores, events, item_features)
+        full_features = build_features(full_candidates, full_scores, events, item_features, args.with_ease)
         recs = apply_ranker(final_ranker, full_features, feature_cols)
-        out_csv = PROJECT_ROOT / "submissions" / "E07_catboost_rerank.csv"
+        out_csv = PROJECT_ROOT / "submissions" / f"E07_catboost_rerank_{args.sasrec_config}{'_ease' if args.with_ease else ''}_pool{args.pool}.csv"
         save_submission(recs, out_csv)
         print(f"сабмит E07: {out_csv}")
 
