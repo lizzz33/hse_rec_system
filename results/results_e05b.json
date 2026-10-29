@@ -1,0 +1,32 @@
+{
+  "splits": {
+    "9010": {
+      "train": 802016,
+      "valid": 92133
+    },
+    "masked10": {
+      "train": 802016,
+      "valid": 92133
+    }
+  },
+  "results": {
+    "9010": {
+      "sasrec_gpu_e192_len200_ep40": {
+        "recall@10_macro_relevant": 0.186922,
+        "recall@10_macro_capped": 0.236335,
+        "recall@10_macro_k": 0.160066,
+        "recall@10_micro": 0.104935,
+        "n_eval_users": 6040
+      }
+    },
+    "masked10": {
+      "sasrec_gpu_e192_len200_ep40": {
+        "recall@10_macro_relevant": 0.069551,
+        "recall@10_macro_capped": 0.085059,
+        "recall@10_macro_k": 0.052897,
+        "recall@10_micro": 0.034678,
+        "n_eval_users": 6040
+      }
+    }
+  }
+}
