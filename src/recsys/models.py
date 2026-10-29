@@ -186,6 +186,48 @@ class ItemKNNRecommender:
         return _dense_top_n(self._scores, self._seen, self._users, self._items, k)
 
 
+class EASERecommender:
+    """EASE (Embarrassingly Shallow Autoencoder, Steck 2019): закрытая форма item-item.
+
+    B = I - P, где P — решение (G + λI) x_j = g_j по G = X^T X (X — binary
+    user-item); скор пользователя = R_user @ B. Один гиперпараметр λ
+    (больше — сильнее регуляризация). Традиционно бьёт ItemKNN на recall
+    и закрывает non-transformer ветку рядом с ALS.
+    """
+
+    def __init__(self, l2: float = 50.0):
+        self.l2 = l2
+        self._scores: np.ndarray | None = None
+        self._users: np.ndarray | None = None
+        self._items: np.ndarray | None = None
+        self._seen: np.ndarray | None = None
+
+    def fit(self, train: pd.DataFrame) -> "EASERecommender":
+        users = np.sort(train["user_id"].unique())
+        items = np.sort(train["item_id"].unique())
+        user_idx, item_idx = _user_item_indices(train, users, items)
+        shape = (len(users), len(items))
+        binary = sp.csr_matrix((np.ones(len(train), dtype=np.float32), (user_idx, item_idx)), shape=shape)
+        self._seen = _seen_mask(user_idx, item_idx, shape)
+
+        gram = (binary.T @ binary).toarray().astype(np.float64)
+        diag_indices = np.diag_indices_from(gram)
+        gram[diag_indices] += self.l2
+        # строки обратной без диагонали: B = I - inv(G) * diag_normalization
+        inverse = np.linalg.inv(gram)
+        # стандартная нормировка Steck: b_ij = -P_ij / P_jj
+        weights = -inverse / np.diag(inverse)[:, None]
+        weights[diag_indices] = 0.0
+        self._scores = (binary @ weights.astype(np.float32)).astype(np.float32)
+        self._users, self._items = users, items
+        return self
+
+    def recommend(self, k: int = 10) -> pd.DataFrame:
+        if self._scores is None:
+            raise RuntimeError("сначала fit(train)")
+        return _dense_top_n(self._scores, self._seen, self._users, self._items, k)
+
+
 class ALSRecommender:
     """E04: implicit ALS (Hu-Koren-Volinsky) на confidence-матрице.
 
