@@ -1,0 +1,64 @@
+{
+  "results": {
+    "e64_len100_ep15": {
+      "recall@10_macro_relevant": 0.16016166165746548,
+      "recall@10_macro_capped": 0.20390610217596972,
+      "recall@10_macro_k": 0.13899006622516558,
+      "recall@10_micro": 0.09111827466814279,
+      "n_eval_users": 6040.0,
+      "users_without_recs": 0.0,
+      "gt_per_user_mean": 15.253807947019867,
+      "gt_per_user_median": 9.0,
+      "dup_in_top_share": 0.0,
+      "n_unique_rec_items": 1956.0,
+      "seen_in_top_share": 0.0,
+      "config": {
+        "EMBEDDING_DIM": 64,
+        "MAX_SEQ_LEN": 100,
+        "NUM_HEADS": 2,
+        "EPOCHS": 40,
+        "BATCH_SIZE": 64
+      }
+    },
+    "e128_len150_ep15": {
+      "recall@10_macro_relevant": 0.1753404341947665,
+      "recall@10_macro_capped": 0.22241445916114788,
+      "recall@10_macro_k": 0.15205298013245033,
+      "recall@10_micro": 0.09968198148329047,
+      "n_eval_users": 6040.0,
+      "users_without_recs": 0.0,
+      "gt_per_user_mean": 15.253807947019867,
+      "gt_per_user_median": 9.0,
+      "dup_in_top_share": 0.0,
+      "n_unique_rec_items": 2163.0,
+      "seen_in_top_share": 0.0,
+      "config": {
+        "EMBEDDING_DIM": 128,
+        "MAX_SEQ_LEN": 150,
+        "NUM_HEADS": 4,
+        "EPOCHS": 25,
+        "BATCH_SIZE": 64
+      }
+    },
+    "e128_len200_ep15": {
+      "recall@10_macro_relevant": 0.1736561453147635,
+      "recall@10_macro_capped": 0.21990742930726376,
+      "recall@10_macro_k": 0.14937086092715232,
+      "recall@10_micro": 0.09792365384824113,
+      "n_eval_users": 6040.0,
+      "users_without_recs": 0.0,
+      "gt_per_user_mean": 15.253807947019867,
+      "gt_per_user_median": 9.0,
+      "dup_in_top_share": 0.0,
+      "n_unique_rec_items": 2184.0,
+      "seen_in_top_share": 0.0,
+      "config": {
+        "EMBEDDING_DIM": 128,
+        "MAX_SEQ_LEN": 200,
+        "NUM_HEADS": 4,
+        "EPOCHS": 25,
+        "BATCH_SIZE": 64
+      }
+    }
+  }
+}

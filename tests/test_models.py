@@ -10,7 +10,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from recsys.models import ALSRecommender, ItemKNNRecommender, PopularityRecommender
+from recsys.models import ALSRecommender, EASERecommender, ItemKNNRecommender, PopularityRecommender
 
 
 def _train_mini() -> pd.DataFrame:
@@ -92,6 +92,21 @@ def test_als_smoke_fit_and_recommend():
     assert recs["score"].notna().all()
     for _, group in recs.groupby("user_id"):
         assert group.sort_values("rank")["score"].is_monotonic_decreasing
+
+
+def test_ease_zero_diagonal_and_seen_filter():
+    model = EASERecommender(l2=10.0).fit(_train_mini())
+    recs = model.recommend(k=10)
+    seen = set(zip(_train_mini()["user_id"], _train_mini()["item_id"]))
+    assert not set(zip(recs["user_id"], recs["item_id"])) & seen
+    assert recs["score"].notna().all()
+    # user 2 (видел 100/101, совпадающие с user 1) должен получить кандидатов user 1
+    user2 = recs[recs.user_id == 2].sort_values("rank")["item_id"].tolist()
+    assert set(user2[:2]) == {102, 103}
+    # веса EASE: нулевая диагональ и симметрия не обязаны сохраняться после
+    # нормировки Steck, но скоры конечны и детерминированы
+    again = EASERecommender(l2=10.0).fit(_train_mini()).recommend(k=10)
+    pd.testing.assert_frame_equal(recs, again)
 
 
 def main() -> None:

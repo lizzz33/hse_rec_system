@@ -35,9 +35,13 @@ from recsys.experiments import RESULTS_DIR, SPLITTERS
 from recsys.metrics import evaluate, save_submission
 
 SWEEP = [
-    {"name": "e64_len100_ep40", "EMBEDDING_DIM": 64, "MAX_SEQ_LEN": 100, "NUM_HEADS": 2, "EPOCHS": 40, "BATCH_SIZE": 64},
-    {"name": "e128_len150_ep25", "EMBEDDING_DIM": 128, "MAX_SEQ_LEN": 150, "NUM_HEADS": 4, "EPOCHS": 25, "BATCH_SIZE": 64},
-    {"name": "e128_len200_ep25", "EMBEDDING_DIM": 128, "MAX_SEQ_LEN": 200, "NUM_HEADS": 4, "EPOCHS": 25, "BATCH_SIZE": 64},
+    # история: первая версия свипа из-за default-аргумента epochs обучила все
+    # конфиги по 15 эпох независимо от имени — записи переименованы в *_ep15
+    {"name": "e64_len100_ep15", "EMBEDDING_DIM": 64, "MAX_SEQ_LEN": 100, "NUM_HEADS": 2, "EPOCHS": 15, "BATCH_SIZE": 64},
+    {"name": "e128_len150_ep15", "EMBEDDING_DIM": 128, "MAX_SEQ_LEN": 150, "NUM_HEADS": 4, "EPOCHS": 15, "BATCH_SIZE": 64},
+    {"name": "e128_len200_ep15", "EMBEDDING_DIM": 128, "MAX_SEQ_LEN": 200, "NUM_HEADS": 4, "EPOCHS": 15, "BATCH_SIZE": 64},
+    # настоящий 40-эпоховый прогон лучшего конфига (эпохи дают +8.5% на e64)
+    {"name": "e128_len150_ep40", "EMBEDDING_DIM": 128, "MAX_SEQ_LEN": 150, "NUM_HEADS": 4, "EPOCHS": 40, "BATCH_SIZE": 64},
 ]
 
 
@@ -66,7 +70,11 @@ def main() -> None:
         else:
             apply_config(config)
             print(f"\n=== {name}: {config} ===", flush=True)
-            scores = e05.fit_predict_sasrec(train, valid, catalog_size, e05.WORK_DIR / "e05c" / name)
+            # epochs передаётся явно: default-аргумент fit_predict_sasrec
+            # заморожен на моменте импорта и не видит переопределения EPOCHS
+            scores = e05.fit_predict_sasrec(
+                train, valid, catalog_size, e05.WORK_DIR / "e05c" / name, epochs=config["EPOCHS"]
+            )
             recs = e05.filter_seen_topk(scores, train)
             panel = evaluate(recs, valid, k=10, train_events=train)
             payload["results"][name] = {str(k): float(v) for k, v in panel.items()}
@@ -80,7 +88,7 @@ def main() -> None:
     print(f"\nлучший конфиг: {best_name} ({best_recall:.4f}) — обучение на полных events", flush=True)
     best_config = next(c for c in SWEEP if c["name"] == best_name)
     apply_config(best_config)
-    scores = e05.fit_predict_sasrec(events, None, catalog_size, e05.WORK_DIR / "e05c" / "full")
+    scores = e05.fit_predict_sasrec(events, None, catalog_size, e05.WORK_DIR / "e05c" / "full", epochs=best_config["EPOCHS"])
     recs = e05.filter_seen_topk(scores, events)
     out = PROJECT_ROOT / "submissions" / f"E05c_sasrec_{best_name}.csv"
     save_submission(recs, out)

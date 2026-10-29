@@ -6,10 +6,21 @@ SASRec top-50 с признаками генераторов и контекст
 доверять ALS/KNN/popularity против SASRec-скора, и поднять Recall@10 над
 чистым SASRec на том же пуле кандидатов.
 
-Признаки (все — только train-часть сплита, leakage-safe):
-- sasrec score / rank (нормированный скор и позиция);
-- als score / rank (als_rating, топ-300) и флаг «найден ALS»;
-- knn score / rank (binary cosine, топ-300) и флаг «найден KNN»;
+Протокол валидации — двухуровневый, без утечки меток в оценку:
+
+    events = train_90% | valid_10%          (внешний уровень, как в E01–E06)
+    train  = inner_90% | inner_valid_10%    (внутренний уровень)
+
+- ранкер обучается на кандидатах/признаках inner-уровня с метками inner_valid;
+- оценка — кандидаты/признаки внешнего train, применение того же ранкера,
+  метрика на внешнем valid (метки которого ранкер никогда не видел);
+- сабмит — SASRec и признаки на полных events + ранкер, дообученный на всех
+  метках внешнего уровня (для скрытого теста все выданные данные — легальны).
+
+Признаки (все — только от train-части соответствующего уровня):
+- sasrec score_norm / rank (нормированный скор и позиция в каталоге);
+- als score / rank / found (als_rating, топ-300);
+- knn score / rank / found (binary cosine, топ-300);
 - item: popularity, positive count (rating>=4), avg rating;
 - user: активность, средняя оценка;
 - user-item: жанровое сходство (доля жанров item в истории user).
@@ -17,7 +28,6 @@ SASRec top-50 с признаками генераторов и контекст
 Контроль: те же кандидаты, ранжированные чистым SASRec-скором.
 
 Запуск:
-    OMP_NUM_THREADS=1 uv run python scripts/e07_reranker.py --sasrec-config e64_len100_ep40
     OMP_NUM_THREADS=1 uv run python scripts/e07_reranker.py --sasrec-config e64_len100_ep40 --submission
 """
 
@@ -42,6 +52,7 @@ from recsys.data import GENRE_COLUMNS, load_events, load_item_features
 from recsys.experiments import RESULTS_DIR, SPLITTERS
 from recsys.metrics import evaluate, save_submission
 from recsys.models import ALSRecommender, ItemKNNRecommender
+from recsys.split import chronological_split
 
 N_CANDIDATES = 50
 GEN_POOL = 300  # глубина пулов ALS/KNN для признаков
@@ -106,8 +117,8 @@ def build_features(candidates: pd.DataFrame, sasrec_full: pd.DataFrame, train: p
     return features
 
 
-def add_labels(features: pd.DataFrame, valid: pd.DataFrame) -> pd.DataFrame:
-    gt = valid.groupby("user_id")["item_id"].agg(set).to_dict()
+def add_labels(features: pd.DataFrame, holdout: pd.DataFrame) -> pd.DataFrame:
+    gt = holdout.groupby("user_id")["item_id"].agg(set).to_dict()
     features = features.copy()
     features["label"] = [int(item in gt.get(user, ())) for user, item in zip(features["user_id"], features["item_id"])]
     return features
@@ -157,27 +168,38 @@ def main() -> None:
     item_features = load_item_features()
     catalog_size = e05.item_catalog(events)
     epochs = args.epochs or int(args.sasrec_config.split("_ep")[-1])
-
-    train, valid = SPLITTERS["9010"](events)
-    work_dir = RESULTS_DIR / "e05_sasrec_work" / "e07" / args.sasrec_config
+    work = RESULTS_DIR / "e05_sasrec_work" / "e07"
     print(f"SASRec: {args.sasrec_config}, epochs={epochs}", flush=True)
 
-    candidates, sasrec_full = sasrec_candidates(train, valid, catalog_size, work_dir, epochs)
-    features = add_labels(build_features(candidates, sasrec_full, train, item_features), valid)
-    feature_cols = [c for c in features.columns if c not in ("user_id", "item_id", "label")]
-    print(f"признаков: {len(feature_cols)}; кандидатов: {len(features):,}; hit-rate: {features['label'].mean():.4f}", flush=True)
+    # --- уровень 1: ранкер обучается внутри train ---
+    train, valid = SPLITTERS["9010"](events)
+    inner_train, inner_valid = chronological_split(train, train_fraction=0.9)
+    print(f"[inner] SASRec на {len(inner_train):,} событий...", flush=True)
+    inner_candidates, inner_full = sasrec_candidates(
+        inner_train, inner_valid, catalog_size, work / "inner", epochs
+    )
+    inner_features = add_labels(
+        build_features(inner_candidates, inner_full, inner_train, item_features), inner_valid
+    )
+    feature_cols = [c for c in inner_features.columns if c not in ("user_id", "item_id", "label")]
+    print(f"признаков: {len(feature_cols)}; inner кандидатов: {len(inner_features):,}; "
+          f"hit-rate: {inner_features['label'].mean():.4f}", flush=True)
+    ranker = fit_ranker(inner_features, feature_cols)
 
+    # --- уровень 2: честная оценка на внешнем valid ---
+    print(f"[outer] SASRec на {len(train):,} событий...", flush=True)
+    candidates, sasrec_full = sasrec_candidates(train, valid, catalog_size, work / "outer", epochs)
+    features = build_features(candidates, sasrec_full, train, item_features)
+    reranked = apply_ranker(ranker, features, feature_cols)
+    panel = evaluate(reranked, valid, k=10, train_events=train)
     control = candidates.sort_values(["user_id", "rank"]).groupby("user_id", sort=False).head(10)
     control_panel = evaluate(control, valid, k=10, train_events=train)
-
-    model = fit_ranker(features, feature_cols)
-    reranked = apply_ranker(model, features, feature_cols)
-    panel = evaluate(reranked, valid, k=10, train_events=train)
-    print(f"[9010] контроль SASRec-only:  recall@10_macro_relevant={control_panel['recall@10_macro_relevant']:.4f}")
-    print(f"[9010] catboost reranking:    recall@10_macro_relevant={panel['recall@10_macro_relevant']:.4f}", flush=True)
+    print(f"[9010] контроль SASRec-only ({epochs} эп): recall@10_macro_relevant={control_panel['recall@10_macro_relevant']:.4f}")
+    print(f"[9010] catboost reranking (честно):        recall@10_macro_relevant={panel['recall@10_macro_relevant']:.4f}", flush=True)
 
     payload = {
         "sasrec_config": args.sasrec_config,
+        "protocol": "two-level: ranker on inner 90/10, evaluated on outer 9010",
         "results": {"9010": {
             "sasrec_only": {str(k): float(v) for k, v in control_panel.items()},
             "catboost_rerank": {str(k): float(v) for k, v in panel.items()},
@@ -188,16 +210,15 @@ def main() -> None:
     print(f"результаты: {out}")
 
     if args.submission:
+        # --- финал: SASRec и признаки на полных events, ранкер на всех внешних метках ---
         print("\n=== сабмит на полных events ===", flush=True)
-        full_scores = e05.fit_predict_sasrec(events, None, catalog_size, RESULTS_DIR / "e05_sasrec_work" / "e07" / "full", epochs=epochs)
+        outer_features = add_labels(build_features(candidates, sasrec_full, train, item_features), valid)
+        final_ranker = fit_ranker(outer_features, feature_cols)
+        full_scores = e05.fit_predict_sasrec(events, None, catalog_size, work / "full", epochs=epochs)
         full_candidates = e05.filter_seen_topk(full_scores, events, k=N_CANDIDATES)
-        # sasrec_rank/norm считаются по полному скор-листу каталога — так же,
-        # как при обучении на 9010 (иначе признаки train и apply разъедутся)
         full_features = build_features(full_candidates, full_scores, events, item_features)
-        # ранкер дообучаем на всех пользователях 9010 (без eval-сплита) для финала
-        final_model = fit_ranker(features, feature_cols)
-        recs = apply_ranker(final_model, full_features, feature_cols)
-        out_csv = PROJECT_ROOT / "submissions" / f"E07_catboost_rerank.csv"
+        recs = apply_ranker(final_ranker, full_features, feature_cols)
+        out_csv = PROJECT_ROOT / "submissions" / "E07_catboost_rerank.csv"
         save_submission(recs, out_csv)
         print(f"сабмит E07: {out_csv}")
 
