@@ -1,5 +1,6 @@
 {
   "sasrec_config": "e64_len100_ep40",
+  "protocol": "two-level: ranker on inner 90/10, evaluated on outer 9010",
   "results": {
     "9010": {
       "sasrec_only": {
@@ -16,16 +17,16 @@
         "seen_in_top_share": 0.0
       },
       "catboost_rerank": {
-        "recall@10_macro_relevant": 0.22242002957976045,
-        "recall@10_macro_capped": 0.2906589666771786,
-        "recall@10_macro_k": 0.20190397350993378,
-        "recall@10_micro": 0.13236299697176906,
+        "recall@10_macro_relevant": 0.17998951943483554,
+        "recall@10_macro_capped": 0.23112444812362032,
+        "recall@10_macro_k": 0.159817880794702,
+        "recall@10_micro": 0.10477244852550117,
         "n_eval_users": 6040.0,
         "users_without_recs": 0.0,
         "gt_per_user_mean": 15.253807947019867,
         "gt_per_user_median": 9.0,
         "dup_in_top_share": 0.0,
-        "n_unique_rec_items": 1921.0,
+        "n_unique_rec_items": 1956.0,
         "seen_in_top_share": 0.0
       }
     }
