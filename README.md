@@ -65,12 +65,22 @@
 - reranking CatBoost/LightGBM;
 - сочетание transformer и non-transformer решений.
 
+## Сабмиты на Kaggle
+
+- аутентификация: Kaggle CLI 2.x (зависимость проекта), токен `~/.kaggle/access_token`;
+- валидация файла: `uv run python scripts/submit.py validate <file>`;
+- отправка: `uv run python scripts/submit.py send <file> --exp E00 --msg "описание"`;
+- статус и скоры: `uv run python scripts/submit.py status`;
+- каждый сабмит автоматически пишется в [notes/submissions.md](notes/submissions.md);
+- лимит 10 сабмитов в день — отправляем только содержательные варианты.
+
 ## Структура проекта
 
 ```text
 hse_recsys_competition/
 ├── data/                 # исходные данные соревнования
 ├── notebooks/            # запускаемые ноутбуки и исследовательские эксперименты
+├── scripts/              # служебные скрипты (сабмит на Kaggle)
 ├── src/
 │   └── recsys/        # переиспользуемый Python-код
 ├── notes/

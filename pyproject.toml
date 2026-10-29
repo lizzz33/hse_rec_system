@@ -7,7 +7,14 @@ authors = [
     { name = "blenlkj", email = "sblenlkj@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "kaggle>=2.2.5",
+    "matplotlib>=3.11.2",
+    "numpy>=2.4,<2.5",
+    "pandas>=2.3,<3",
+    "pyspark>=3.5,<4",
+    "replay-rec[spark,torch]>=0.22.0",
+]
 
 [project.scripts]
 recsys = "recsys:main"
@@ -15,3 +22,9 @@ recsys = "recsys:main"
 [build-system]
 requires = ["uv_build>=0.12.11,<0.13.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0",
+    "nbclient>=0.11.0",
+]

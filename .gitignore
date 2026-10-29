@@ -9,4 +9,7 @@ wheels/
 # Virtual environments
 .venv
 
+# Generated submission artifacts
+submissions/
+
 tunnel.md
