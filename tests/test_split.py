@@ -15,7 +15,7 @@ from pathlib import Path
 import pandas as pd
 
 from recsys.data import DataValidationError
-from recsys.split import chronological_split, last_n_split
+from recsys.split import chronological_split, last_n_split, masked_split
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 
@@ -112,6 +112,44 @@ def test_rejects_impossible_input():
     _expect_error(lambda: last_n_split(events, n=14))
 
 
+def test_masked_split():
+    events = _events_mini()
+    train, valid = masked_split(events, valid_fraction=0.2, seed=7)
+    # user 1: ceil(10 * 0.2) = 2 valid; user 2: ceil(14 * 0.2) = 3 valid
+    assert len(valid) == 5 and len(train) == 19
+    assert valid.groupby("user_id").size().to_dict() == {1: 2, 2: 3}
+    # сохранность и отсутствие утечки пар (user, item)
+    assert set(zip(train["user_id"], train["item_id"])) & set(zip(valid["user_id"], valid["item_id"])) == set()
+    # все пользователи остались в обеих частях
+    assert set(train["user_id"]) == {1, 2} == set(valid["user_id"])
+
+
+def test_masked_split_deterministic_and_shuffled():
+    events = _events_mini()
+    train, first = masked_split(events, valid_fraction=0.3, seed=42)
+    second = masked_split(events, valid_fraction=0.3, seed=42)[1]
+    pd.testing.assert_frame_equal(first, second)
+    # другой seed даёт другой выбор (при 24 событиях совпадение всех трёх
+    # позиций у обоих пользователей практически исключено)
+    other = masked_split(events, valid_fraction=0.3, seed=43)[1]
+    assert not first.reset_index(drop=True).equals(other.reset_index(drop=True))
+    # отличие от chronological: маска прячет события и из середины истории,
+    # поэтому у пользователя остаются train-события «после» valid-событий
+    mixed = (
+        train.merge(first[["user_id", "timestamp"]].rename(columns={"timestamp": "valid_ts"}), on="user_id")
+        .query("timestamp > valid_ts")
+    )
+    assert len(mixed) > 0
+
+
+def test_masked_split_rejects_bad_input():
+    events = _events_mini()
+    _expect_error(lambda: masked_split(events, valid_fraction=0.0))
+    _expect_error(lambda: masked_split(events, valid_fraction=1.0))
+    empty = pd.DataFrame({"user_id": [], "item_id": [], "rating": [], "timestamp": []})
+    _expect_error(lambda: masked_split(empty))
+
+
 def test_real_data_split_numbers():
     """Числа из notes/data.md и докстрингов split.py; пропускается без data/."""
     if not (DATA_DIR / "events.csv").is_file():
@@ -125,6 +163,11 @@ def test_real_data_split_numbers():
     assert valid["user_id"].nunique() == 6_040
     _, valid10 = last_n_split(events)
     assert len(valid10) == 60_400
+    # masked10 прячет ту же долю историй тем же ceil-правилом, что и 90/10,
+    # поэтому даёт ровно тот же размер validation — но в случайных позициях
+    _, valid_masked = masked_split(events)
+    assert len(valid_masked) == 92_133
+    assert valid_masked["user_id"].nunique() == 6_040
 
 
 def main() -> None:

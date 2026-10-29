@@ -1,0 +1,222 @@
+{
+  "splits": {
+    "9010": {
+      "train": 802016,
+      "valid": 92133,
+      "valid_users": 6040
+    },
+    "last10": {
+      "train": 833749,
+      "valid": 60400,
+      "valid_users": 6040
+    },
+    "masked10": {
+      "train": 802016,
+      "valid": 92133,
+      "valid_users": 6040
+    }
+  },
+  "results": {
+    "9010": {
+      "als_binary": {
+        "recall@10_macro_relevant": 0.06543094877898432,
+        "recall@10_macro_capped": 0.07963924366656154,
+        "recall@10_macro_k": 0.04779801324503311,
+        "recall@10_micro": 0.03133513507646554,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1004.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_binary_a10": {
+        "recall@10_macro_relevant": 0.0635932223685601,
+        "recall@10_macro_capped": 0.0774404761904762,
+        "recall@10_macro_k": 0.0460430463576159,
+        "recall@10_micro": 0.03018462440168018,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1662.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_rating": {
+        "recall@10_macro_relevant": 0.06581766795654224,
+        "recall@10_macro_capped": 0.0804466256701356,
+        "recall@10_macro_k": 0.048443708609271524,
+        "recall@10_micro": 0.03175843617379224,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1256.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_rating_a10": {
+        "recall@10_macro_relevant": 0.057824056095367976,
+        "recall@10_macro_capped": 0.06985690633869442,
+        "recall@10_macro_k": 0.0415728476821192,
+        "recall@10_micro": 0.02725407834326463,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1990.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_pos_ge4": {
+        "recall@10_macro_relevant": 0.06402876221661655,
+        "recall@10_macro_capped": 0.07962314727215389,
+        "recall@10_macro_k": 0.04996688741721853,
+        "recall@10_micro": 0.03275699260851161,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1268.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "last10": {
+      "als_binary": {
+        "recall@10_macro_relevant": 0.05862582781456954,
+        "recall@10_macro_capped": 0.05862582781456954,
+        "recall@10_macro_k": 0.05862582781456954,
+        "recall@10_micro": 0.058625827814569535,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1029.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_binary_a10": {
+        "recall@10_macro_relevant": 0.05645695364238411,
+        "recall@10_macro_capped": 0.05645695364238411,
+        "recall@10_macro_k": 0.05645695364238411,
+        "recall@10_micro": 0.05645695364238411,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1714.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_rating": {
+        "recall@10_macro_relevant": 0.0603476821192053,
+        "recall@10_macro_capped": 0.0603476821192053,
+        "recall@10_macro_k": 0.0603476821192053,
+        "recall@10_micro": 0.0603476821192053,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1289.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_rating_a10": {
+        "recall@10_macro_relevant": 0.05033112582781457,
+        "recall@10_macro_capped": 0.05033112582781457,
+        "recall@10_macro_k": 0.05033112582781457,
+        "recall@10_micro": 0.05033112582781457,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 2062.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_pos_ge4": {
+        "recall@10_macro_relevant": 0.05756622516556291,
+        "recall@10_macro_capped": 0.05756622516556291,
+        "recall@10_macro_k": 0.05756622516556291,
+        "recall@10_micro": 0.057566225165562916,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1280.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "masked10": {
+      "als_binary": {
+        "recall@10_macro_relevant": 0.15775999260236973,
+        "recall@10_macro_capped": 0.21782363607694735,
+        "recall@10_macro_k": 0.1620860927152318,
+        "recall@10_micro": 0.10625942930328981,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 940.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_binary_a10": {
+        "recall@10_macro_relevant": 0.16366579134677012,
+        "recall@10_macro_capped": 0.21487884999474405,
+        "recall@10_macro_k": 0.15211920529801326,
+        "recall@10_micro": 0.09972539698045217,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1626.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_rating": {
+        "recall@10_macro_relevant": 0.16905864936052342,
+        "recall@10_macro_capped": 0.22815088563019026,
+        "recall@10_macro_k": 0.16622516556291392,
+        "recall@10_micro": 0.1089728978758968,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1216.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_rating_a10": {
+        "recall@10_macro_relevant": 0.13580140988222963,
+        "recall@10_macro_capped": 0.16981709239987383,
+        "recall@10_macro_k": 0.11445364238410595,
+        "recall@10_micro": 0.07503283296972854,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1997.0,
+        "seen_in_top_share": 0.0
+      },
+      "als_pos_ge4": {
+        "recall@10_macro_relevant": 0.14926785439630194,
+        "recall@10_macro_capped": 0.20017095027856616,
+        "recall@10_macro_k": 0.14508278145695364,
+        "recall@10_micro": 0.09511250040702028,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1212.0,
+        "seen_in_top_share": 0.0
+      }
+    }
+  }
+}

@@ -13,3 +13,6 @@ wheels/
 submissions/
 
 tunnel.md
+# Experiment artifacts
+logs/
+results/e05_sasrec_work/

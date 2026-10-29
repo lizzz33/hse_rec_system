@@ -41,7 +41,7 @@ def last_n_split(events: pd.DataFrame, n: int = 10) -> tuple[pd.DataFrame, pd.Da
     """Альтернативный split: последние ``n`` событий каждого пользователя.
 
     Даёт ровно 10 ground-truth айтемов на пользователя (60 400 validation-строк),
-    удобен как robustness-проверка рядом с Recall@10, но сильнее искажает долю
+    удобен как robustness-проверку рядом с Recall@10, но сильнее искажает долю
     holdout для коротких и длинных историй (notes/data.md, раздел 6).
     """
     if n < 1:
@@ -53,6 +53,41 @@ def last_n_split(events: pd.DataFrame, n: int = 10) -> tuple[pd.DataFrame, pd.Da
         shortest = int(size.min())
         raise ValueError(f"у части пользователей не больше {n} событий (минимум {shortest}): train после holdout пуст")
     is_validation = rank > size - n
+    return events[~is_validation].reset_index(drop=True), events[is_validation].reset_index(drop=True)
+
+
+def masked_split(
+    events: pd.DataFrame, valid_fraction: float = 0.1, seed: int = 20261029
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Diagnostic split: случайные ``ceil(n * valid_fraction)`` событий каждого пользователя.
+
+    Это НЕ temporal-протокол и не замена chronological_split: события прячутся
+    в случайных позициях историй, как предположительно построен скрытый тест
+    соревнования (пропуски в timestamp, notes/data.md, раздел 7). Используется
+    только как competition-mimic диагностика рядом с основным 90/10 split,
+    чтобы отличить модели, которые лучше работают с «разреженным хвостом»,
+    от моделей, которые лучше восстанавливают случайные пропуски.
+
+    Детерминирован ``seed``: случайный ключ присваивается каждой строке,
+    в validation уходят строки с наибольшими ключами внутри пользователя.
+    """
+    if not 0.0 < valid_fraction < 1.0:
+        raise ValueError(f"valid_fraction должен быть в (0, 1), получен {valid_fraction}")
+    if events.empty:
+        raise ValueError("events пуст")
+    rng = np.random.default_rng(seed)
+    key = rng.random(len(events))
+    size = events.groupby("user_id", sort=False)["user_id"].transform("size")
+    # тот же epsilon-фикс представления float, что в chronological_split
+    validation_size = np.ceil(size * valid_fraction - 1e-9).astype(int)
+    if (validation_size >= size).any():
+        raise ValueError("история из одного события или слишком большой valid_fraction: "
+                         "у части пользователей весь history уходит в validation")
+    # ключи почти наверное уникальны внутри пользователя — rank по убыванию ключа
+    # выбирает ровно validation_size случайных строк на пользователя;
+    # сравниваем numpy-массивы, а не Series: индексы могут не совпадать после срезов
+    key_rank = pd.Series(key).groupby(events["user_id"].to_numpy()).rank(method="first", ascending=False)
+    is_validation = key_rank.to_numpy() <= validation_size.to_numpy()
     return events[~is_validation].reset_index(drop=True), events[is_validation].reset_index(drop=True)
 
 

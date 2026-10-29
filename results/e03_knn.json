@@ -1,0 +1,183 @@
+{
+  "splits": {
+    "9010": {
+      "train": 802016,
+      "valid": 92133,
+      "valid_users": 6040
+    },
+    "last10": {
+      "train": 833749,
+      "valid": 60400,
+      "valid_users": 6040
+    },
+    "masked10": {
+      "train": 802016,
+      "valid": 92133,
+      "valid_users": 6040
+    }
+  },
+  "results": {
+    "9010": {
+      "binary_cosine": {
+        "recall@10_macro_relevant": 0.06036994334113382,
+        "recall@10_macro_capped": 0.07809839167455061,
+        "recall@10_macro_k": 0.05253311258278146,
+        "recall@10_micro": 0.03443934312352794,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 464.0,
+        "seen_in_top_share": 0.0
+      },
+      "binary_cosine_top200": {
+        "recall@10_macro_relevant": 0.055820773988576024,
+        "recall@10_macro_capped": 0.0733403631872175,
+        "recall@10_macro_k": 0.050298013245033114,
+        "recall@10_micro": 0.03297407009432017,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 444.0,
+        "seen_in_top_share": 0.0
+      },
+      "rating_cosine": {
+        "recall@10_macro_relevant": 0.06020120979202928,
+        "recall@10_macro_capped": 0.07867589088615579,
+        "recall@10_macro_k": 0.053377483443708615,
+        "recall@10_micro": 0.03499289071233977,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 466.0,
+        "seen_in_top_share": 0.0
+      },
+      "centered_cosine_top200": {
+        "recall@10_macro_relevant": 0.0429483147166287,
+        "recall@10_macro_capped": 0.06086802270577105,
+        "recall@10_macro_k": 0.045149006622516565,
+        "recall@10_micro": 0.02959851518999707,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1413.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "last10": {
+      "binary_cosine": {
+        "recall@10_macro_relevant": 0.058427152317880794,
+        "recall@10_macro_capped": 0.058427152317880794,
+        "recall@10_macro_k": 0.058427152317880794,
+        "recall@10_micro": 0.058427152317880794,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 461.0,
+        "seen_in_top_share": 0.0
+      },
+      "binary_cosine_top200": {
+        "recall@10_macro_relevant": 0.051788079470198665,
+        "recall@10_macro_capped": 0.051788079470198665,
+        "recall@10_macro_k": 0.051788079470198665,
+        "recall@10_micro": 0.05178807947019867,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 433.0,
+        "seen_in_top_share": 0.0
+      },
+      "rating_cosine": {
+        "recall@10_macro_relevant": 0.058841059602649,
+        "recall@10_macro_capped": 0.058841059602649,
+        "recall@10_macro_k": 0.058841059602649,
+        "recall@10_micro": 0.05884105960264901,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 455.0,
+        "seen_in_top_share": 0.0
+      },
+      "centered_cosine_top200": {
+        "recall@10_macro_relevant": 0.040794701986754965,
+        "recall@10_macro_capped": 0.040794701986754965,
+        "recall@10_macro_k": 0.040794701986754965,
+        "recall@10_micro": 0.040794701986754965,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 10.0,
+        "gt_per_user_median": 10.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1473.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "masked10": {
+      "binary_cosine": {
+        "recall@10_macro_relevant": 0.12223542074637958,
+        "recall@10_macro_capped": 0.17565601019657312,
+        "recall@10_macro_k": 0.13443708609271524,
+        "recall@10_micro": 0.0881334592382751,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 461.0,
+        "seen_in_top_share": 0.0
+      },
+      "binary_cosine_top200": {
+        "recall@10_macro_relevant": 0.11008785996433695,
+        "recall@10_macro_capped": 0.16062151792284243,
+        "recall@10_macro_k": 0.12422185430463575,
+        "recall@10_micro": 0.08143661880108105,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 439.0,
+        "seen_in_top_share": 0.0
+      },
+      "rating_cosine": {
+        "recall@10_macro_relevant": 0.12056412777090728,
+        "recall@10_macro_capped": 0.17413802165457795,
+        "recall@10_macro_k": 0.13400662251655632,
+        "recall@10_micro": 0.08785125850672397,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 448.0,
+        "seen_in_top_share": 0.0
+      },
+      "centered_cosine_top200": {
+        "recall@10_macro_relevant": 0.07128209700770856,
+        "recall@10_macro_capped": 0.1091232392515505,
+        "recall@10_macro_k": 0.08685430463576159,
+        "recall@10_micro": 0.056939424527585124,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1419.0,
+        "seen_in_top_share": 0.0
+      }
+    }
+  }
+}
