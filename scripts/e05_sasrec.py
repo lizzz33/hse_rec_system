@@ -176,6 +176,9 @@ def fit_predict_sasrec(
         log_every_n_steps=100,
         enable_progress_bar=False,
         num_sanity_val_steps=0,
+        # без валидации val_dataloader не запрашивается вовсе
+        # (иначе ParquetModule падает с KeyError: 'validate')
+        limit_val_batches=0 if valid is None else 1.0,
     )
     trainer.fit(module, datamodule=datamodule)
 

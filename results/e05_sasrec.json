@@ -1,0 +1,46 @@
+{
+  "splits": {
+    "9010": {
+      "train": 802016,
+      "valid": 92133,
+      "valid_users": 6040
+    },
+    "masked10": {
+      "train": 802016,
+      "valid": 92133,
+      "valid_users": 6040
+    }
+  },
+  "results": {
+    "9010": {
+      "sasrec_default": {
+        "recall@10_macro_relevant": 0.16016166165746548,
+        "recall@10_macro_capped": 0.20390610217596972,
+        "recall@10_macro_k": 0.13899006622516558,
+        "recall@10_micro": 0.09111827466814279,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 1956.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "masked10": {
+      "sasrec_default": {
+        "recall@10_macro_relevant": 0.06415949704008098,
+        "recall@10_macro_capped": 0.09921732103437401,
+        "recall@10_macro_k": 0.07880794701986756,
+        "recall@10_micro": 0.05166444162243713,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253807947019867,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 99.0,
+        "seen_in_top_share": 0.0
+      }
+    }
+  }
+}

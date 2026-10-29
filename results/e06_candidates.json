@@ -1,0 +1,86 @@
+{
+  "splits": {
+    "9010": {
+      "train": 802016,
+      "valid": 92133
+    },
+    "masked10": {
+      "train": 802016,
+      "valid": 92133
+    }
+  },
+  "results": {
+    "9010": {
+      "cand_als": {
+        "cand_recall@10": 0.065818,
+        "cand_recall@25": 0.149303,
+        "cand_recall@50": 0.254688,
+        "cand_recall@100": 0.396755,
+        "cand_recall@200": 0.553441
+      },
+      "cand_knn": {
+        "cand_recall@10": 0.06037,
+        "cand_recall@25": 0.119661,
+        "cand_recall@50": 0.190623,
+        "cand_recall@100": 0.296828,
+        "cand_recall@200": 0.433194
+      },
+      "cand_union_als_knn": {
+        "cand_recall@10": 0.066461,
+        "cand_recall@25": 0.139846,
+        "cand_recall@50": 0.234358,
+        "cand_recall@100": 0.371405,
+        "cand_recall@200": 0.53725
+      },
+      "blend_rank_top10": {
+        "recall@10_macro_relevant": 0.068826,
+        "recall@10_macro_capped": 0.084315,
+        "recall@10_macro_k": 0.052831,
+        "recall@10_micro": 0.034635,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253808,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 688.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "masked10": {
+      "cand_als": {
+        "cand_recall@10": 0.169059,
+        "cand_recall@25": 0.298656,
+        "cand_recall@50": 0.430546,
+        "cand_recall@100": 0.574452,
+        "cand_recall@200": 0.708872
+      },
+      "cand_knn": {
+        "cand_recall@10": 0.122235,
+        "cand_recall@25": 0.205322,
+        "cand_recall@50": 0.290882,
+        "cand_recall@100": 0.398784,
+        "cand_recall@200": 0.53006
+      },
+      "cand_union_als_knn": {
+        "cand_recall@10": 0.157437,
+        "cand_recall@25": 0.276741,
+        "cand_recall@50": 0.396854,
+        "cand_recall@100": 0.539612,
+        "cand_recall@200": 0.682898
+      },
+      "blend_rank_top10": {
+        "recall@10_macro_relevant": 0.156293,
+        "recall@10_macro_capped": 0.218321,
+        "recall@10_macro_k": 0.164553,
+        "recall@10_micro": 0.107877,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 15.253808,
+        "gt_per_user_median": 9.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 666.0,
+        "seen_in_top_share": 0.0
+      }
+    }
+  }
+}

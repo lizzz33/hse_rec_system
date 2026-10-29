@@ -153,8 +153,17 @@ RePlay baseline.
 
 Цель: проверить утверждение преподавателя о сильном transformer fit-predict baseline.
 
-### E06 — BERT4Rec
-Только если SASRec показывает, что sequential branch действительно перспективна.
+### E06 — Candidate union и блендинг
+Union кандидатов лучших моделей (ALS ∪ KNN ∪ SASRec), Candidate Recall@N,
+rank/score blending. Нумерация фиксирована в notes/hypotheses.md.
+
+### E07 — Feature reranking
+CatBoost/LightGBM ranker поверх candidate union.
+
+### E08 — BERT4Rec
+Только если SASRec показывает, что sequential branch действительно перспективна
+(и особенно если скрытый тест окажется случайной маской — masked-LM сюжет).
+Запуск на удалённом GPU-ядре.
 
 GPT4Rec пока не является обязательным этапом: сначала проверяем более дешёвые sequential models.
 
