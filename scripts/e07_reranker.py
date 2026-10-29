@@ -122,6 +122,14 @@ def build_features(candidates: pd.DataFrame, sasrec_full: pd.DataFrame, train: p
     return features
 
 
+def next1_of(events: pd.DataFrame) -> pd.DataFrame:
+    """Одно «следующее» событие пользователя: первое holdout-событие или
+    последнее событие самого events (для inner-уровня: оно исключается из
+    inner-обучения SASRec выше по скрипту через chronological_split)."""
+    return (events.sort_values(["user_id", "timestamp"])
+                  .groupby("user_id").first().reset_index()[["user_id", "item_id"]])
+
+
 def add_labels(features: pd.DataFrame, holdout: pd.DataFrame) -> pd.DataFrame:
     gt = holdout.groupby("user_id")["item_id"].agg(set).to_dict()
     features = features.copy()
@@ -169,6 +177,10 @@ def main() -> None:
     parser.add_argument("--submission", action="store_true", help="собрать сабмит на полных events")
     parser.add_argument("--with-ease", action="store_true", help="добавить признаки EASE (lambda=1500)")
     parser.add_argument("--pool", type=int, default=N_CANDIDATES, help="размер пула кандидатов SASRec")
+    parser.add_argument("--protocol", choices=["tail", "next1"], default="tail",
+                        help="tail: метки/оценка по 10%% хвосту; next1: метки = последнее событие "
+                             "inner, оценка = первое событие внешнего holdout (реконструкция "
+                             "скрытого теста = последние 1-3 события, data.md раздел 7)")
     args = parser.parse_args()
 
     global N_CANDIDATES
@@ -192,12 +204,21 @@ def main() -> None:
     # --- уровень 1: ранкер обучается внутри train ---
     train, valid = SPLITTERS["9010"](events)
     inner_train, inner_valid = chronological_split(train, train_fraction=0.9)
+    # next1 (реконструкция скрытого теста, data.md раздел 7): метки ранкера =
+    # первое событие inner_valid, оценка = первое событие внешнего valid
+    # (в точности monitor-протокол SASRec); tail — прежние полные хвосты
+    if args.protocol == "next1":
+        inner_label_gt = next1_of(inner_valid)
+        outer_eval_gt = next1_of(valid)
+    else:
+        inner_label_gt = inner_valid
+        outer_eval_gt = valid
     print(f"[inner] SASRec на {len(inner_train):,} событий...", flush=True)
     inner_candidates, inner_full = sasrec_candidates(
         inner_train, inner_valid, catalog_size, work / "inner", epochs
     )
     inner_features = add_labels(
-        build_features(inner_candidates, inner_full, inner_train, item_features, args.with_ease), inner_valid
+        build_features(inner_candidates, inner_full, inner_train, item_features, args.with_ease), inner_label_gt
     )
     feature_cols = [c for c in inner_features.columns if c not in ("user_id", "item_id", "label")]
     print(f"признаков: {len(feature_cols)}; inner кандидатов: {len(inner_features):,}; "
@@ -209,34 +230,34 @@ def main() -> None:
     candidates, sasrec_full = sasrec_candidates(train, valid, catalog_size, work / "outer", epochs)
     features = build_features(candidates, sasrec_full, train, item_features, args.with_ease)
     reranked = apply_ranker(ranker, features, feature_cols)
-    panel = evaluate(reranked, valid, k=10, train_events=train)
+    panel = evaluate(reranked, outer_eval_gt, k=10, train_events=train)
     control = candidates.sort_values(["user_id", "rank"]).groupby("user_id", sort=False).head(10)
-    control_panel = evaluate(control, valid, k=10, train_events=train)
-    print(f"[9010] контроль SASRec-only ({epochs} эп): recall@10_macro_relevant={control_panel['recall@10_macro_relevant']:.4f}")
-    print(f"[9010] catboost reranking (честно):        recall@10_macro_relevant={panel['recall@10_macro_relevant']:.4f}", flush=True)
+    control_panel = evaluate(control, outer_eval_gt, k=10, train_events=train)
+    print(f"[{args.protocol}] контроль SASRec-only ({epochs} эп): recall@10={control_panel['recall@10_macro_relevant']:.4f}")
+    print(f"[{args.protocol}] catboost reranking (честно):        recall@10={panel['recall@10_macro_relevant']:.4f}", flush=True)
 
     payload = {
         "sasrec_config": f"{args.sasrec_config}{'_ease' if args.with_ease else ''}_pool{args.pool}",
-        "protocol": "two-level: ranker on inner 90/10, evaluated on outer 9010",
-        "results": {"9010": {
+        "protocol": f"two-level ({args.protocol}): ranker on inner, evaluated on outer",
+        "results": {args.protocol: {
             "sasrec_only": {str(k): float(v) for k, v in control_panel.items()},
             "catboost_rerank": {str(k): float(v) for k, v in panel.items()},
         }},
     }
-    out = RESULTS_DIR / f"e07_reranker{'_ease' if args.with_ease else ''}_pool{args.pool}.json"
+    out = RESULTS_DIR / f"e07_reranker{'_ease' if args.with_ease else ''}_pool{args.pool}_{args.protocol}.json"
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
     print(f"результаты: {out}")
 
     if args.submission:
         # --- финал: SASRec и признаки на полных events, ранкер на всех внешних метках ---
         print("\n=== сабмит на полных events ===", flush=True)
-        outer_features = add_labels(build_features(candidates, sasrec_full, train, item_features, args.with_ease), valid)
+        outer_features = add_labels(build_features(candidates, sasrec_full, train, item_features, args.with_ease), outer_eval_gt)
         final_ranker = fit_ranker(outer_features, feature_cols)
         full_scores = e05.fit_predict_sasrec(events, None, catalog_size, work / "full", epochs=epochs)
         full_candidates = e05.filter_seen_topk(full_scores, events, k=N_CANDIDATES)
         full_features = build_features(full_candidates, full_scores, events, item_features, args.with_ease)
         recs = apply_ranker(final_ranker, full_features, feature_cols)
-        out_csv = PROJECT_ROOT / "submissions" / f"E07_catboost_rerank_{args.sasrec_config}{'_ease' if args.with_ease else ''}_pool{args.pool}.csv"
+        out_csv = PROJECT_ROOT / "submissions" / f"E07_catboost_rerank_{args.sasrec_config}{'_ease' if args.with_ease else ''}_pool{args.pool}_{args.protocol}.csv"
         save_submission(recs, out_csv)
         print(f"сабмит E07: {out_csv}")
 
