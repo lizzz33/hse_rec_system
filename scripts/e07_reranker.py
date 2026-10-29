@@ -167,9 +167,18 @@ def main() -> None:
     events = load_events()
     item_features = load_item_features()
     catalog_size = e05.item_catalog(events)
-    epochs = args.epochs or int(args.sasrec_config.split("_ep")[-1])
-    work = RESULTS_DIR / "e05_sasrec_work" / "e07"
-    print(f"SASRec: {args.sasrec_config}, epochs={epochs}", flush=True)
+    # конфиг вида e{dim}_len{len}_ep{epochs}: применяем к модулю e05 целиком,
+    # иначе fit_predict_sasrec останется на дефолтных e64/len100
+    parts = args.sasrec_config.split("_")
+    e05.EMBEDDING_DIM = int(parts[0][1:])
+    e05.MAX_SEQ_LEN = int(parts[1][3:])
+    e05.NUM_HEADS = 4 if e05.EMBEDDING_DIM >= 128 else 2
+    epochs = args.epochs or int(parts[2][2:])
+    # рабочий каталог — с именем конфига: в нём лежит чекпойнт лучшей эпохи,
+    # и чекпойнт другой размерности (например, e64 после e128) не подгрузится
+    work = RESULTS_DIR / "e05_sasrec_work" / "e07" / args.sasrec_config
+    print(f"SASRec: {args.sasrec_config} -> dim={e05.EMBEDDING_DIM}, len={e05.MAX_SEQ_LEN}, "
+          f"heads={e05.NUM_HEADS}, epochs={epochs}", flush=True)
 
     # --- уровень 1: ранкер обучается внутри train ---
     train, valid = SPLITTERS["9010"](events)
