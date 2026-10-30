@@ -1,0 +1,33 @@
+[02:48:33] [outer] полное окно: пул из кэша e10 control /home/epbichurina/hse_rec_system/results/e10_hybrid_blend_work/cache/sasrec_outer_top200.parquet
+[02:48:34] короткий predict-parquet (последние 30): /home/epbichurina/hse_rec_system/results/e15_work/predict_outer_len30.parquet (6040 последовательностей)
+[02:48:35] [outer] инференс окно 30: /home/epbichurina/hse_rec_system/results/e05_sasrec_work/e07/e128_len150_ep40/outer/checkpoints/best.ckpt по /home/epbichurina/hse_rec_system/results/e15_work/predict_outer_len30.parquet...
+/home/epbichurina/hse_rec_system/scripts/e10_hybrid_blend.py:220: UserWarning: The following dataset paths aren't provided: train,validate,test. Make sure to disable these stages in your Lightning Trainer configuration.
+  predict_datamodule = ParquetModule(
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/data.py:123: Your `IterableDataset` has `__len__` defined. In combination with multi-process data loading (when num_workers > 1), `__len__` could be inaccurate if each worker is not configured independently to avoid having duplicate data.
+[02:51:10] [outer] окно 30: пул 1,208,000 строк -> /home/epbichurina/hse_rec_system/results/e15_work/pool_outer_len30.parquet
+[02:51:12] короткий predict-parquet (последние 50): /home/epbichurina/hse_rec_system/results/e15_work/predict_outer_len50.parquet (6040 последовательностей)
+[02:51:12] [outer] инференс окно 50: /home/epbichurina/hse_rec_system/results/e05_sasrec_work/e07/e128_len150_ep40/outer/checkpoints/best.ckpt по /home/epbichurina/hse_rec_system/results/e15_work/predict_outer_len50.parquet...
+/home/epbichurina/hse_rec_system/scripts/e10_hybrid_blend.py:220: UserWarning: The following dataset paths aren't provided: train,validate,test. Make sure to disable these stages in your Lightning Trainer configuration.
+  predict_datamodule = ParquetModule(
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/data.py:123: Your `IterableDataset` has `__len__` defined. In combination with multi-process data loading (when num_workers > 1), `__len__` could be inaccurate if each worker is not configured independently to avoid having duplicate data.
+[02:53:49] [outer] окно 50: пул 1,208,000 строк -> /home/epbichurina/hse_rec_system/results/e15_work/pool_outer_len50.parquet
+[02:53:51] [outer] соло окно 150: filtered 0.3190, unfiltered 0.2334
+[02:53:52] [outer] соло окно 30: filtered 0.3010, unfiltered 0.2233
+[02:53:53] [outer] соло окно 50: filtered 0.3109, unfiltered 0.2293
+[02:53:56] [outer] ФИКСИРОВАННЫЙ бленд (short_len=30, w=0.3): 0.3180 против фильтрованного SASRec 0.3190 (-0.31%)
+[02:53:59] сетка окно 30: w=0.3: 0.3180, w=0.5: 0.3139, w=0.7: 0.3094
+[02:54:03] сетка окно 50: w=0.3: 0.3189, w=0.5: 0.3169, w=0.7: 0.3169
+[02:54:07] [outer] потолок (подбор на outer): 0.3189 (short_len=50, w=0.3)
+[02:54:08] артефакт бленда top-200: /home/epbichurina/hse_rec_system/results/e15_work/e15_outer_best_blend_top200.parquet (1,208,000 строк)
+[02:54:09] [outer] критерий H15a: прирост -0.31% (не достигнут)
+[02:54:09] результаты: /home/epbichurina/hse_rec_system/results/e15_session_inference.json

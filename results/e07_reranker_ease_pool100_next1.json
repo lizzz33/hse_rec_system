@@ -1,0 +1,34 @@
+{
+  "sasrec_config": "e128_len150_ep40_ease_pool100",
+  "protocol": "two-level (next1): ranker on inner, evaluated on outer",
+  "results": {
+    "next1": {
+      "sasrec_only": {
+        "recall@10_macro_relevant": 0.31903973509933775,
+        "recall@10_macro_capped": 0.31903973509933775,
+        "recall@10_macro_k": 0.03190397350993378,
+        "recall@10_micro": 0.31903973509933775,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 1.0,
+        "gt_per_user_median": 1.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 2381.0,
+        "seen_in_top_share": 0.0
+      },
+      "catboost_rerank": {
+        "recall@10_macro_relevant": 0.3248344370860927,
+        "recall@10_macro_capped": 0.3248344370860927,
+        "recall@10_macro_k": 0.032483443708609276,
+        "recall@10_micro": 0.3248344370860927,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 1.0,
+        "gt_per_user_median": 1.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 2146.0,
+        "seen_in_top_share": 0.0
+      }
+    }
+  }
+}

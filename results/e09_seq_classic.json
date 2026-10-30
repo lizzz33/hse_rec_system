@@ -1,0 +1,736 @@
+{
+  "monitor_baseline_sasrec_e128_len150_ep40": 0.233444,
+  "protocols": {
+    "next1@9010": {
+      "split": {
+        "train": 802016,
+        "gt_users": 6040
+      },
+      "variants": {
+        "knn_full": {
+          "recall@10_macro_relevant": 0.06721854304635762,
+          "recall@10_macro_capped": 0.06721854304635762,
+          "recall@10_macro_k": 0.006721854304635763,
+          "recall@10_micro": 0.06721854304635762,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 464.0,
+          "seen_in_top_share": 0.0
+        },
+        "knn_last10": {
+          "recall@10_macro_relevant": 0.15894039735099338,
+          "recall@10_macro_capped": 0.15894039735099338,
+          "recall@10_macro_k": 0.01589403973509934,
+          "recall@10_micro": 0.15894039735099338,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1115.0,
+          "seen_in_top_share": 0.0
+        },
+        "ease_last5": {
+          "recall@10_macro_relevant": 0.2139072847682119,
+          "recall@10_macro_capped": 0.2139072847682119,
+          "recall@10_macro_k": 0.021390728476821195,
+          "recall@10_micro": 0.2139072847682119,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1791.0,
+          "seen_in_top_share": 0.0
+        },
+        "markov_backoff": {
+          "recall@10_macro_relevant": 0.2359271523178808,
+          "recall@10_macro_capped": 0.2359271523178808,
+          "recall@10_macro_k": 0.02359271523178808,
+          "recall@10_micro": 0.2359271523178808,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1955.0,
+          "seen_in_top_share": 0.0
+        },
+        "blend_draft": {
+          "recall@10_macro_relevant": 0.24221854304635762,
+          "recall@10_macro_capped": 0.24221854304635762,
+          "recall@10_macro_k": 0.024221854304635762,
+          "recall@10_micro": 0.24221854304635762,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1571.0,
+          "seen_in_top_share": 0.0
+        },
+        "blend_pure": {
+          "recall@10_macro_relevant": 0.24221854304635762,
+          "recall@10_macro_capped": 0.24221854304635762,
+          "recall@10_macro_k": 0.024221854304635762,
+          "recall@10_micro": 0.24221854304635762,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1571.0,
+          "seen_in_top_share": 0.0
+        },
+        "blend_mk_ease": {
+          "recall@10_macro_relevant": 0.25149006622516556,
+          "recall@10_macro_capped": 0.25149006622516556,
+          "recall@10_macro_k": 0.025149006622516557,
+          "recall@10_micro": 0.25149006622516556,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1873.0,
+          "seen_in_top_share": 0.0
+        }
+      },
+      "markov_best": {
+        "depth": 6,
+        "decay": 0.6
+      },
+      "markov_grid": [
+        {
+          "depth": 1,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 1,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 1,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 1,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 1,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 1,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 1,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.17764900662251656
+        },
+        {
+          "depth": 2,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.21059602649006623
+        },
+        {
+          "depth": 2,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.2139072847682119
+        },
+        {
+          "depth": 2,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.2163907284768212
+        },
+        {
+          "depth": 2,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.21821192052980132
+        },
+        {
+          "depth": 2,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.21771523178807947
+        },
+        {
+          "depth": 2,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.21788079470198676
+        },
+        {
+          "depth": 2,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.21788079470198676
+        },
+        {
+          "depth": 3,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.2195364238410596
+        },
+        {
+          "depth": 3,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.22549668874172185
+        },
+        {
+          "depth": 3,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.22847682119205298
+        },
+        {
+          "depth": 3,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.23013245033112584
+        },
+        {
+          "depth": 3,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.2293046357615894
+        },
+        {
+          "depth": 3,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.22897350993377483
+        },
+        {
+          "depth": 3,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.2259933774834437
+        },
+        {
+          "depth": 4,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.2230132450331126
+        },
+        {
+          "depth": 4,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.22781456953642384
+        },
+        {
+          "depth": 4,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.2326158940397351
+        },
+        {
+          "depth": 4,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.23410596026490066
+        },
+        {
+          "depth": 4,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.23211920529801325
+        },
+        {
+          "depth": 4,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.22913907284768212
+        },
+        {
+          "depth": 4,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.22533112582781456
+        },
+        {
+          "depth": 5,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.22417218543046358
+        },
+        {
+          "depth": 5,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.2304635761589404
+        },
+        {
+          "depth": 5,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.23543046357615893
+        },
+        {
+          "depth": 5,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.23509933774834438
+        },
+        {
+          "depth": 5,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.23228476821192054
+        },
+        {
+          "depth": 5,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.22996688741721855
+        },
+        {
+          "depth": 5,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.2230132450331126
+        },
+        {
+          "depth": 6,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.225
+        },
+        {
+          "depth": 6,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.23112582781456953
+        },
+        {
+          "depth": 6,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.2359271523178808
+        },
+        {
+          "depth": 6,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.2359271523178808
+        },
+        {
+          "depth": 6,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.23443708609271524
+        },
+        {
+          "depth": 6,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.23013245033112584
+        },
+        {
+          "depth": 6,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.2208609271523179
+        }
+      ],
+      "backoff_grid": [
+        {
+          "w": 0.0,
+          "recall@10_macro_relevant": 0.2359271523178808
+        },
+        {
+          "w": 1.0,
+          "recall@10_macro_relevant": 0.23112582781456953
+        },
+        {
+          "w": 2.0,
+          "recall@10_macro_relevant": 0.2294701986754967
+        },
+        {
+          "w": 3.0,
+          "recall@10_macro_relevant": 0.22152317880794703
+        },
+        {
+          "w": 5.0,
+          "recall@10_macro_relevant": 0.19950331125827814
+        }
+      ],
+      "backoff_best_w": 0.0,
+      "alpha_sensitivity": {
+        "0.01": 0.23543046357615893,
+        "0.2": 0.23112582781456953
+      },
+      "blend_configs": {
+        "blend_draft": {
+          "markov_bo": 4.0,
+          "knn10": 1.0,
+          "ease5": 1.0
+        },
+        "blend_pure": {
+          "markov": 4.0,
+          "knn10": 1.0,
+          "ease5": 1.0
+        },
+        "blend_mk_ease": {
+          "markov": 4.0,
+          "ease5": 1.0
+        }
+      }
+    },
+    "last1": {
+      "split": {
+        "train": 888109,
+        "gt_users": 6040
+      },
+      "variants": {
+        "knn_full": {
+          "recall@10_macro_relevant": 0.06837748344370861,
+          "recall@10_macro_capped": 0.06837748344370861,
+          "recall@10_macro_k": 0.006837748344370862,
+          "recall@10_micro": 0.06837748344370861,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 464.0,
+          "seen_in_top_share": 0.0
+        },
+        "knn_last10": {
+          "recall@10_macro_relevant": 0.13559602649006622,
+          "recall@10_macro_capped": 0.13559602649006622,
+          "recall@10_macro_k": 0.013559602649006623,
+          "recall@10_micro": 0.13559602649006622,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1175.0,
+          "seen_in_top_share": 0.0
+        },
+        "ease_last5": {
+          "recall@10_macro_relevant": 0.19602649006622516,
+          "recall@10_macro_capped": 0.19602649006622516,
+          "recall@10_macro_k": 0.01960264900662252,
+          "recall@10_micro": 0.19602649006622516,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1886.0,
+          "seen_in_top_share": 0.0
+        },
+        "markov_backoff": {
+          "recall@10_macro_relevant": 0.22632450331125828,
+          "recall@10_macro_capped": 0.22632450331125828,
+          "recall@10_macro_k": 0.022632450331125827,
+          "recall@10_micro": 0.22632450331125828,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1892.0,
+          "seen_in_top_share": 0.0
+        },
+        "blend_draft": {
+          "recall@10_macro_relevant": 0.22433774834437087,
+          "recall@10_macro_capped": 0.22433774834437087,
+          "recall@10_macro_k": 0.022433774834437085,
+          "recall@10_micro": 0.22433774834437087,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1622.0,
+          "seen_in_top_share": 0.0
+        },
+        "blend_pure": {
+          "recall@10_macro_relevant": 0.22433774834437087,
+          "recall@10_macro_capped": 0.22433774834437087,
+          "recall@10_macro_k": 0.022433774834437085,
+          "recall@10_micro": 0.22433774834437087,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1622.0,
+          "seen_in_top_share": 0.0
+        },
+        "blend_mk_ease": {
+          "recall@10_macro_relevant": 0.23741721854304637,
+          "recall@10_macro_capped": 0.23741721854304637,
+          "recall@10_macro_k": 0.023741721854304638,
+          "recall@10_micro": 0.23741721854304637,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 1886.0,
+          "seen_in_top_share": 0.0
+        }
+      },
+      "markov_best": {
+        "depth": 6,
+        "decay": 0.7
+      },
+      "markov_grid": [
+        {
+          "depth": 1,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 1,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 1,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 1,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 1,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 1,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 1,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.17682119205298014
+        },
+        {
+          "depth": 2,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.20182119205298013
+        },
+        {
+          "depth": 2,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.20364238410596028
+        },
+        {
+          "depth": 2,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.2033112582781457
+        },
+        {
+          "depth": 2,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.20397350993377483
+        },
+        {
+          "depth": 2,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.20380794701986754
+        },
+        {
+          "depth": 2,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.2021523178807947
+        },
+        {
+          "depth": 2,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.20049668874172186
+        },
+        {
+          "depth": 3,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.20860927152317882
+        },
+        {
+          "depth": 3,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.20943708609271522
+        },
+        {
+          "depth": 3,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.21324503311258278
+        },
+        {
+          "depth": 3,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.2152317880794702
+        },
+        {
+          "depth": 3,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.21705298013245033
+        },
+        {
+          "depth": 3,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.21556291390728477
+        },
+        {
+          "depth": 3,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.21225165562913909
+        },
+        {
+          "depth": 4,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.21125827814569537
+        },
+        {
+          "depth": 4,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.21456953642384105
+        },
+        {
+          "depth": 4,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.2205298013245033
+        },
+        {
+          "depth": 4,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.21970198675496688
+        },
+        {
+          "depth": 4,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.21920529801324504
+        },
+        {
+          "depth": 4,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.2165562913907285
+        },
+        {
+          "depth": 4,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.21043046357615894
+        },
+        {
+          "depth": 5,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.21341059602649007
+        },
+        {
+          "depth": 5,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.2165562913907285
+        },
+        {
+          "depth": 5,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.223841059602649
+        },
+        {
+          "depth": 5,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.22466887417218542
+        },
+        {
+          "depth": 5,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.22251655629139072
+        },
+        {
+          "depth": 5,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.21804635761589403
+        },
+        {
+          "depth": 5,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.21092715231788078
+        },
+        {
+          "depth": 6,
+          "decay": 0.4,
+          "recall@10_macro_relevant": 0.21341059602649007
+        },
+        {
+          "depth": 6,
+          "decay": 0.5,
+          "recall@10_macro_relevant": 0.21788079470198676
+        },
+        {
+          "depth": 6,
+          "decay": 0.6,
+          "recall@10_macro_relevant": 0.22483443708609271
+        },
+        {
+          "depth": 6,
+          "decay": 0.7,
+          "recall@10_macro_relevant": 0.22632450331125828
+        },
+        {
+          "depth": 6,
+          "decay": 0.8,
+          "recall@10_macro_relevant": 0.22533112582781456
+        },
+        {
+          "depth": 6,
+          "decay": 0.9,
+          "recall@10_macro_relevant": 0.21821192052980132
+        },
+        {
+          "depth": 6,
+          "decay": 1.0,
+          "recall@10_macro_relevant": 0.2052980132450331
+        }
+      ],
+      "backoff_grid": [
+        {
+          "w": 0.0,
+          "recall@10_macro_relevant": 0.22632450331125828
+        },
+        {
+          "w": 1.0,
+          "recall@10_macro_relevant": 0.22350993377483444
+        },
+        {
+          "w": 2.0,
+          "recall@10_macro_relevant": 0.22135761589403974
+        },
+        {
+          "w": 3.0,
+          "recall@10_macro_relevant": 0.21605960264900662
+        },
+        {
+          "w": 5.0,
+          "recall@10_macro_relevant": 0.2029801324503311
+        }
+      ],
+      "backoff_best_w": 0.0,
+      "alpha_sensitivity": {
+        "0.01": 0.22698675496688742,
+        "0.2": 0.2228476821192053
+      },
+      "blend_configs": {
+        "blend_draft": {
+          "markov_bo": 4.0,
+          "knn10": 1.0,
+          "ease5": 1.0
+        },
+        "blend_pure": {
+          "markov": 4.0,
+          "knn10": 1.0,
+          "ease5": 1.0
+        },
+        "blend_mk_ease": {
+          "markov": 4.0,
+          "ease5": 1.0
+        }
+      }
+    }
+  },
+  "blend_config_for_submission": {
+    "selected_on": "last1",
+    "blend": "blend_mk_ease",
+    "weights": {
+      "markov": 4.0,
+      "ease5": 1.0
+    },
+    "depth": 6,
+    "decay": 0.7,
+    "backoff_w": 0.0
+  },
+  "submission": {
+    "path": "/home/epbichurina/hse_rec_system/submissions/E09_seq_classic_blend_mk_ease.csv",
+    "n_users": 6040
+  }
+}

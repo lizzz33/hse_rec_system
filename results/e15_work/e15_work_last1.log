@@ -1,0 +1,9 @@
+[02:54:47] [last1] инференс окно 150: /home/epbichurina/hse_rec_system/results/e10_hybrid_blend_work/sasrec_last1/checkpoints/best.ckpt по /home/epbichurina/hse_rec_system/results/e10_hybrid_blend_work/sasrec_last1/predict.parquet...
+/home/epbichurina/hse_rec_system/scripts/e10_hybrid_blend.py:220: UserWarning: The following dataset paths aren't provided: train,validate,test. Make sure to disable these stages in your Lightning Trainer configuration.
+  predict_datamodule = ParquetModule(
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/data.py:123: Your `IterableDataset` has `__len__` defined. In combination with multi-process data loading (when num_workers > 1), `__len__` could be inaccurate if each worker is not configured independently to avoid having duplicate data.

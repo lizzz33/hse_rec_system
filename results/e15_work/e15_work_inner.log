@@ -1,0 +1,39 @@
+[02:40:54] [inner] инференс окно 150: /home/epbichurina/hse_rec_system/results/e05_sasrec_work/e07/e128_len150_ep40/inner/checkpoints/best.ckpt по /home/epbichurina/hse_rec_system/results/e05_sasrec_work/e07/e128_len150_ep40/inner/predict.parquet...
+/home/epbichurina/hse_rec_system/scripts/e10_hybrid_blend.py:209: UserWarning: The following dataset paths aren't provided: train,validate,test. Make sure to disable these stages in your Lightning Trainer configuration.
+  predict_datamodule = ParquetModule(
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/data.py:123: Your `IterableDataset` has `__len__` defined. In combination with multi-process data loading (when num_workers > 1), `__len__` could be inaccurate if each worker is not configured independently to avoid having duplicate data.
+[02:43:40] [inner] окно 150: пул 1,208,000 строк -> /home/epbichurina/hse_rec_system/results/e15_work/pool_inner_len150.parquet
+[02:43:41] короткий predict-parquet (последние 30): /home/epbichurina/hse_rec_system/results/e15_work/predict_inner_len30.parquet (6040 последовательностей)
+[02:43:41] [inner] инференс окно 30: /home/epbichurina/hse_rec_system/results/e05_sasrec_work/e07/e128_len150_ep40/inner/checkpoints/best.ckpt по /home/epbichurina/hse_rec_system/results/e15_work/predict_inner_len30.parquet...
+/home/epbichurina/hse_rec_system/scripts/e10_hybrid_blend.py:209: UserWarning: The following dataset paths aren't provided: train,validate,test. Make sure to disable these stages in your Lightning Trainer configuration.
+  embedding_dim=e05.EMBEDDING_DIM,
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/data.py:123: Your `IterableDataset` has `__len__` defined. In combination with multi-process data loading (when num_workers > 1), `__len__` could be inaccurate if each worker is not configured independently to avoid having duplicate data.
+[02:45:21] [inner] окно 30: пул 1,208,000 строк -> /home/epbichurina/hse_rec_system/results/e15_work/pool_inner_len30.parquet
+[02:45:21] короткий predict-parquet (последние 50): /home/epbichurina/hse_rec_system/results/e15_work/predict_inner_len50.parquet (6040 последовательностей)
+[02:45:21] [inner] инференс окно 50: /home/epbichurina/hse_rec_system/results/e05_sasrec_work/e07/e128_len150_ep40/inner/checkpoints/best.ckpt по /home/epbichurina/hse_rec_system/results/e15_work/predict_inner_len50.parquet...
+/home/epbichurina/hse_rec_system/scripts/e10_hybrid_blend.py:209: UserWarning: The following dataset paths aren't provided: train,validate,test. Make sure to disable these stages in your Lightning Trainer configuration.
+  embedding_dim=e05.EMBEDDING_DIM,
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+💡 Tip: For seamless cloud uploads and versioning, try installing [litmodels](https://pypi.org/project/litmodels/) to enable LitModelCheckpoint, which syncs automatically with the Lightning model registry.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/epbichurina/hse_rec_system/.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/data.py:123: Your `IterableDataset` has `__len__` defined. In combination with multi-process data loading (when num_workers > 1), `__len__` could be inaccurate if each worker is not configured independently to avoid having duplicate data.
+[02:47:15] [inner] окно 50: пул 1,208,000 строк -> /home/epbichurina/hse_rec_system/results/e15_work/pool_inner_len50.parquet
+[02:47:17] [inner] соло окно 150: filtered 0.3116, unfiltered 0.2331
+[02:47:18] [inner] соло окно 30: filtered 0.3012, unfiltered 0.2220
+[02:47:19] [inner] соло окно 50: filtered 0.3046, unfiltered 0.2311
+[02:47:22] сетка окно 30: w=0.3: 0.3121, w=0.5: 0.3103, w=0.7: 0.3088
+[02:47:26] сетка окно 50: w=0.3: 0.3098, w=0.5: 0.3101, w=0.7: 0.3088
+[02:47:29] [inner] лучший конфиг: short_len=30, w_short=0.3 -> HR@10=0.3121, panel=0.3121
+[02:47:30] результаты: /home/epbichurina/hse_rec_system/results/e15_session_inference.json

@@ -170,6 +170,7 @@ def apply_ranker(model: CatBoostRanker, features: pd.DataFrame, feature_cols: li
 
 
 def main() -> None:
+    global N_CANDIDATES
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sasrec-config", default="e64_len100_ep40",
                         help="имя конфига из свипа e05c (для протокола журнала)")
@@ -183,7 +184,6 @@ def main() -> None:
                              "скрытого теста = последние 1-3 события, data.md раздел 7)")
     args = parser.parse_args()
 
-    global N_CANDIDATES
     N_CANDIDATES = args.pool
     events = load_events()
     item_features = load_item_features()

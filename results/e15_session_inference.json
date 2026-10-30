@@ -1,0 +1,363 @@
+{
+  "inner": {
+    "train_events": 719149,
+    "gt": "first event of inner_valid",
+    "solo": {
+      "len150": {
+        "filtered_panel": {
+          "recall@10_macro_relevant": 0.3115894039735099,
+          "recall@10_macro_capped": 0.3115894039735099,
+          "recall@10_macro_k": 0.031158940397350992,
+          "recall@10_micro": 0.3115894039735099,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2332.0,
+          "seen_in_top_share": 0.0
+        },
+        "unfiltered_panel": {
+          "recall@10_macro_relevant": 0.23311258278145697,
+          "recall@10_macro_capped": 0.23311258278145697,
+          "recall@10_macro_k": 0.0233112582781457,
+          "recall@10_micro": 0.23311258278145697,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2338.0,
+          "seen_in_top_share": 0.3860264900662252
+        }
+      },
+      "len30": {
+        "filtered_panel": {
+          "recall@10_macro_relevant": 0.30115894039735097,
+          "recall@10_macro_capped": 0.30115894039735097,
+          "recall@10_macro_k": 0.030115894039735094,
+          "recall@10_micro": 0.30115894039735097,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2317.0,
+          "seen_in_top_share": 0.0
+        },
+        "unfiltered_panel": {
+          "recall@10_macro_relevant": 0.22201986754966888,
+          "recall@10_macro_capped": 0.22201986754966888,
+          "recall@10_macro_k": 0.022201986754966888,
+          "recall@10_micro": 0.22201986754966888,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2262.0,
+          "seen_in_top_share": 0.37448675496688744
+        }
+      },
+      "len50": {
+        "filtered_panel": {
+          "recall@10_macro_relevant": 0.304635761589404,
+          "recall@10_macro_capped": 0.304635761589404,
+          "recall@10_macro_k": 0.0304635761589404,
+          "recall@10_micro": 0.304635761589404,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2314.0,
+          "seen_in_top_share": 0.0
+        },
+        "unfiltered_panel": {
+          "recall@10_macro_relevant": 0.23112582781456953,
+          "recall@10_macro_capped": 0.23112582781456953,
+          "recall@10_macro_k": 0.023112582781456958,
+          "recall@10_micro": 0.23112582781456953,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2293.0,
+          "seen_in_top_share": 0.38420529801324504
+        }
+      }
+    },
+    "grid": [
+      {
+        "short_len": 30,
+        "w_short": 0.3,
+        "hr10": 0.3120860927152318
+      },
+      {
+        "short_len": 30,
+        "w_short": 0.5,
+        "hr10": 0.31026490066225165
+      },
+      {
+        "short_len": 30,
+        "w_short": 0.7,
+        "hr10": 0.3087748344370861
+      },
+      {
+        "short_len": 50,
+        "w_short": 0.3,
+        "hr10": 0.3097682119205298
+      },
+      {
+        "short_len": 50,
+        "w_short": 0.5,
+        "hr10": 0.31009933774834436
+      },
+      {
+        "short_len": 50,
+        "w_short": 0.7,
+        "hr10": 0.3087748344370861
+      }
+    ],
+    "best": {
+      "short_len": 30,
+      "w_short": 0.3,
+      "hr10": 0.3120860927152318
+    },
+    "best_panel": {
+      "recall@10_macro_relevant": 0.3120860927152318,
+      "recall@10_macro_capped": 0.3120860927152318,
+      "recall@10_macro_k": 0.031208609271523177,
+      "recall@10_micro": 0.3120860927152318,
+      "n_eval_users": 6040.0,
+      "users_without_recs": 0.0,
+      "gt_per_user_mean": 1.0,
+      "gt_per_user_median": 1.0,
+      "dup_in_top_share": 0.0,
+      "n_unique_rec_items": 2278.0,
+      "seen_in_top_share": 0.0
+    },
+    "overlap": {
+      "30": {
+        "short_len": 30,
+        "users_missed_by_full": 4158,
+        "missed_recovered_by_short": 164,
+        "missed_recovered_share": 0.039442039442039445,
+        "top30_jaccard_mean": 0.747495878182341
+      },
+      "50": {
+        "short_len": 50,
+        "users_missed_by_full": 4158,
+        "missed_recovered_by_short": 92,
+        "missed_recovered_share": 0.022126022126022125,
+        "top30_jaccard_mean": 0.8397206505965488
+      }
+    }
+  },
+  "outer": {
+    "train_events": 802016,
+    "gt": "first event of valid_9010",
+    "solo": {
+      "len150": {
+        "filtered_panel": {
+          "recall@10_macro_relevant": 0.31903973509933775,
+          "recall@10_macro_capped": 0.31903973509933775,
+          "recall@10_macro_k": 0.03190397350993378,
+          "recall@10_micro": 0.31903973509933775,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2381.0,
+          "seen_in_top_share": 0.0
+        },
+        "unfiltered_panel": {
+          "recall@10_macro_relevant": 0.23344370860927152,
+          "recall@10_macro_capped": 0.23344370860927152,
+          "recall@10_macro_k": 0.023344370860927152,
+          "recall@10_micro": 0.23344370860927152,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2358.0,
+          "seen_in_top_share": 0.3721523178807947
+        }
+      },
+      "len30": {
+        "filtered_panel": {
+          "recall@10_macro_relevant": 0.30099337748344374,
+          "recall@10_macro_capped": 0.30099337748344374,
+          "recall@10_macro_k": 0.030099337748344373,
+          "recall@10_micro": 0.30099337748344374,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2320.0,
+          "seen_in_top_share": 0.0
+        },
+        "unfiltered_panel": {
+          "recall@10_macro_relevant": 0.22334437086092715,
+          "recall@10_macro_capped": 0.22334437086092715,
+          "recall@10_macro_k": 0.022334437086092715,
+          "recall@10_micro": 0.22334437086092715,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2250.0,
+          "seen_in_top_share": 0.3679635761589404
+        }
+      },
+      "len50": {
+        "filtered_panel": {
+          "recall@10_macro_relevant": 0.3109271523178808,
+          "recall@10_macro_capped": 0.3109271523178808,
+          "recall@10_macro_k": 0.03109271523178808,
+          "recall@10_micro": 0.3109271523178808,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2350.0,
+          "seen_in_top_share": 0.0
+        },
+        "unfiltered_panel": {
+          "recall@10_macro_relevant": 0.2293046357615894,
+          "recall@10_macro_capped": 0.2293046357615894,
+          "recall@10_macro_k": 0.022930463576158945,
+          "recall@10_micro": 0.2293046357615894,
+          "n_eval_users": 6040.0,
+          "users_without_recs": 0.0,
+          "gt_per_user_mean": 1.0,
+          "gt_per_user_median": 1.0,
+          "dup_in_top_share": 0.0,
+          "n_unique_rec_items": 2298.0,
+          "seen_in_top_share": 0.3744701986754967
+        }
+      }
+    },
+    "fixed_config": {
+      "short_len": 30,
+      "w_short": 0.3,
+      "hr10": 0.3120860927152318
+    },
+    "fixed_panel": {
+      "recall@10_macro_relevant": 0.31804635761589406,
+      "recall@10_macro_capped": 0.31804635761589406,
+      "recall@10_macro_k": 0.03180463576158941,
+      "recall@10_micro": 0.31804635761589406,
+      "n_eval_users": 6040.0,
+      "users_without_recs": 0.0,
+      "gt_per_user_mean": 1.0,
+      "gt_per_user_median": 1.0,
+      "dup_in_top_share": 0.0,
+      "n_unique_rec_items": 2333.0,
+      "seen_in_top_share": 0.0
+    },
+    "ceiling": {
+      "short_len": 50,
+      "w_short": 0.3,
+      "hr10": 0.31887417218543046,
+      "panel": {
+        "recall@10_macro_relevant": 0.31887417218543046,
+        "recall@10_macro_capped": 0.31887417218543046,
+        "recall@10_macro_k": 0.03188741721854305,
+        "recall@10_micro": 0.31887417218543046,
+        "n_eval_users": 6040.0,
+        "users_without_recs": 0.0,
+        "gt_per_user_mean": 1.0,
+        "gt_per_user_median": 1.0,
+        "dup_in_top_share": 0.0,
+        "n_unique_rec_items": 2349.0,
+        "seen_in_top_share": 0.0
+      }
+    },
+    "grid_ceiling": [
+      {
+        "short_len": 30,
+        "w_short": 0.3,
+        "hr10": 0.31804635761589406
+      },
+      {
+        "short_len": 30,
+        "w_short": 0.5,
+        "hr10": 0.31390728476821195
+      },
+      {
+        "short_len": 30,
+        "w_short": 0.7,
+        "hr10": 0.30943708609271525
+      },
+      {
+        "short_len": 50,
+        "w_short": 0.3,
+        "hr10": 0.31887417218543046
+      },
+      {
+        "short_len": 50,
+        "w_short": 0.5,
+        "hr10": 0.316887417218543
+      },
+      {
+        "short_len": 50,
+        "w_short": 0.7,
+        "hr10": 0.316887417218543
+      }
+    ],
+    "overlap": {
+      "30": {
+        "short_len": 30,
+        "users_missed_by_full": 4113,
+        "missed_recovered_by_short": 150,
+        "missed_recovered_share": 0.03646973012399708,
+        "top30_jaccard_mean": 0.7474784584448818
+      },
+      "50": {
+        "short_len": 50,
+        "users_missed_by_full": 4113,
+        "missed_recovered_by_short": 91,
+        "missed_recovered_share": 0.02212496960855823,
+        "top30_jaccard_mean": 0.8396694081315434
+      }
+    },
+    "artifact_top200": "/home/epbichurina/hse_rec_system/results/e15_work/e15_outer_best_blend_top200.parquet",
+    "bases": {
+      "filtered": 0.31903973509933775,
+      "unfiltered_monitor": 0.23344370860927152
+    }
+  },
+  "criterion": {
+    "h15a_gain_vs_filtered_sasrec": -0.0031136481577581643,
+    "h15a_threshold": 0.01,
+    "h15a_accepted": false,
+    "note": "+1% к фильтрованному SASRec (0.3190) на next1@9010 -> компонента финального бленда E17"
+  },
+  "meta": {
+    "sasrec_config": "e128_len150_ep40 (dim=128, len=150, heads=4, blocks=2, dropout=0.3, ep=40)",
+    "checkpoints": {
+      "inner": "results/e05_sasrec_work/e07/e128_len150_ep40/inner/checkpoints/best.ckpt",
+      "outer": "results/e05_sasrec_work/e07/e128_len150_ep40/outer/checkpoints/best.ckpt",
+      "last1": "results/e10_hybrid_blend_work/sasrec_last1/checkpoints/best.ckpt (незавершённый e10-трейн на момент 03:10)"
+    },
+    "mechanic": "короткое окно = sequences обрезаны до последних N событий в predict-parquet; RePlay-ридер левый-паддинг, короткая последовательность занимает хвостовые позиции окна 150",
+    "protocol_weights": "подбор short_len x w на inner, фиксация, оценка на outer next1@9010 (как E10)",
+    "timing": {
+      "inner_3_inferences": "~7 мин",
+      "outer_2_inferences": "~6 мин (полное окно из кэша e10 control)"
+    }
+  },
+  "last1": {
+    "status": "todo: CPU занят параллельными e10/e11-прогонами + чекпойнт e10 sasrec-last1 ещё дописывался во время инференса (best.ckpt mtime 02:55:15 > старта инференса 02:54:47) — окна использовали бы разные версии весов; прогон остановлен, отравленных кэшей нет. Пересчитать --stage last1 после завершения e10-трейна (порядка 10 мин инференса)."
+  },
+  "lookahead": {
+    "status": "отменён (H15b): по требованию координации CPU (параллельные e10/e11) после отрицательного результата H15a на inner/outer; стадия реализована в scripts/e15_session_inference.py --stage lookahead."
+  }
+}
